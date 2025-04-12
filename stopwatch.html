@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Stopwatch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .stopwatch {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #timeDisplay {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #ddd;
+        }
+
+        .buttons button:active {
+            background-color: #ccc;
+        }
+
+        #startStopBtn {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #resetBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        #startStopBtn:hover {
+            background-color: #45a049;
+        }
+
+        #resetBtn:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+    <div class="stopwatch">
+        <h1>Stopwatch</h1>
+        <div id="timeDisplay">00:00:00</div>
+        <div class="buttons">
+            <button id="startStopBtn" onclick="startStop()">Start</button>
+            <button id="resetBtn" onclick="reset()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let timer;
+        let isRunning = false;
+        let seconds = 0;
+        let minutes = 0;
+        let hours = 0;
+
+        function startStop() {
+            if (isRunning) {
+                clearInterval(timer);
+                document.getElementById('startStopBtn').textContent = 'Start';
+            } else {
+                timer = setInterval(updateTime, 1000);
+                document.getElementById('startStopBtn').textContent = 'Stop';
+            }
+            isRunning = !isRunning;
+        }
+
+        function updateTime() {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes === 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+
+            displayTime();
+        }
+
+        function displayTime() {
+            const formattedTime = formatTime(hours, minutes
